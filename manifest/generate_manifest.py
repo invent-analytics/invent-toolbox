@@ -8,11 +8,7 @@ Example usage
 """
 import os
 import hashlib
-
-### Parameter: FOLDER_PATH
-### This should be a directory with CSV files in it. Example: "/home/data"
-FOLDER_PATH: str = ""
-
+import sys
 
 def hash_local_file(file_path, chunk_size):
     print(f"calculating checksum of {file_path} file")
@@ -78,4 +74,5 @@ def generate(folder_path):
 
 
 if __name__ == "__main__":
-    generate(FOLDER_PATH)
+    print("processing folder:"+sys.argv[1])
+    generate(sys.argv[1])
