@@ -2,8 +2,7 @@
 Example usage
 
 - Put your CSV files under a folder named "C:/Desktop/data_feed"
-- Set the value of FOLDER_PATH variable (generate_manifest.py file, 6th line) as "C:/Desktop/data_feed"
-- Run the generate_manifest.py script with python3 using this command: "python3 generate_manifest.py"
+- Run the generate_manifest.py script with python3 using this command: "python3 generate_manifest.py C:/Desktop/data_feed"
 - This script generates a file called "manifest" in the same folder with the CSV files.
 """
 import os
