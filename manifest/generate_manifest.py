@@ -9,6 +9,8 @@ Example usage
 import os
 import hashlib
 import sys
+from argparse import Namespace
+from typing import Tuple, List
 
 def hash_local_file(file_path, chunk_size):
     print(f"calculating checksum of {file_path} file")
@@ -48,12 +50,35 @@ def prepare_manifest_content(checksum: dict, delimiter: str) -> str:
     return manifest
 
 
+def get_files_and_directories(folder_path) -> Tuple[List[str], List[str]]:
+    """
+    Returns list of files with their full paths
+
+    :param folder_path: command line arguments
+    :type folder_path: Namespace
+
+    :return: list of directories and file_names in the file tree
+    :rtype: Tuple[List[str], List[str]]
+    """
+    file_names = []
+    valid_suffixes = [".csv"] + ["manifest"]
+    # if arguments.include_sub_dirs:
+    for root, _, files in os.walk(folder_path):
+        valid_files = [
+            os.path.join(root, file).split(folder_path)[1]
+            for file in files
+            if file.lower().endswith(tuple(valid_suffixes))
+        ]
+        file_names.extend(valid_files)
+    return None, file_names
+
+
 def generate(folder_path):
     # ensure that folder_path ends with "/" character
     if not folder_path.endswith("/"):
         folder_path += "/"
     # get files and directories in the directory
-    _, _, file_names = next(os.walk(folder_path))
+    directories, file_names = get_files_and_directories(folder_path)
     # if a manifest file already exists in the directory,
     # remove it from the file list
     if "manifest" in file_names:
